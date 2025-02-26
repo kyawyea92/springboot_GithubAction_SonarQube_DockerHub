@@ -63,5 +63,6 @@ jobs:
         run: docker build ./SpringBootSonarQube/ -t kyawyealwin/springboot_sonarqube:latest
       - name: Push to DockerHub
         run: |
+         tree
          docker login -u kyawyealwin -p ${{secrets.DOCKER_PASSWORD}}
          docker push kyawyealwin/springboot_sonarqube:latest
