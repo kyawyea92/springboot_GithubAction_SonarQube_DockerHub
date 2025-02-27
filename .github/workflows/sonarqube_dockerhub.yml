@@ -37,7 +37,7 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
  test:
-  runs-on: ubuntub-latest
+  runs-on: ubuntu-latest
   needs: build
   steps:
     - name: Checkout from Repository
