@@ -59,12 +59,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4.2.2
+        
       - name: Check file list
-        run:  cd ./SpringBootSonarQube/ tree
-      - name: Build Docker images
-        run: docker build ./SpringBootSonarQube/ -t kyawyealwin/springboot_sonarqube:latest
-      - name: Push to DockerHub
-        run: |
-         tree
-         docker login -u kyawyealwin -p ${{secrets.DOCKER_PASSWORD}}
-         docker push kyawyealwin/springboot_sonarqube:latest
+        run: tree ./SpringBootSonarQube
+       
