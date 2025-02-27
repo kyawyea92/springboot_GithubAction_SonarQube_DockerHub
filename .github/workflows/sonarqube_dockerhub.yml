@@ -53,26 +53,32 @@ jobs:
             echo "Quality gate failed"
             exit 1
           fi
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4.6.0
-      with:
-       name: springboot_sonarqube
-       path: SpringBootSonarQube/target/*.jar
  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4.1.8
-        with:
-         name: springboot_sonarqube
-         path: ./SpringBootSonarQube/target
+      - name: Checkout for production
+        uses: actions/checkout@v4.2.2
         
-      - name: Check file list
-        run: ls -al SpringBootSonarQube/target
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4.7.0
+        with:
+          java-version: 21
+          distribution: "temurin"
+          cache: maven
+          
+      - name: Build With Maven
+        run: mvn clean install -DskipTests=true
+        working-directory: SpringBootSonarQube
+        
+      - name: Package with Maven
+        run: mvn package -DskipTests=true
+        working-directory: SpringBootSonarQube
 
-      - name: deploy and push to DockerHub
+      - name: Build Docker images
+        run: docker build ./SpringBootSonarQube/ -t kyayealwin/springboot_sonarqube:v1.0.0
+      
+      - name: Push to DockerHub
         run: |
-         docker build -t SpringBootSonarQube/ kyayealwin/springboot_sonarqube:v1.0.0 .
-         docker login -u kyawyelwin -p ${{secrets.DOCKER_PASSWORD}}
-         docker push kyawyelwin/springboot_sonarqube:v1.0.0
+          docker login -u kyawyealwin -p ${{secrets.DOCKER_PASSWORD}}
+          docker push kyayealwin/springboot_sonarqube:v1.0.0
