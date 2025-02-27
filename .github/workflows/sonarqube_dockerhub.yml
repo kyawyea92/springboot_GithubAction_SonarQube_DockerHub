@@ -76,9 +76,9 @@ jobs:
         working-directory: SpringBootSonarQube
 
       - name: Build Docker images
-        run: docker build ./SpringBootSonarQube/ -t kyayealwin/springboot_sonarqube:v1.0.0
+        run: docker build ./SpringBootSonarQube/ -t kyawyealwin/springboot_sonarqube:v1.0.0
       
       - name: Push to DockerHub
         run: |
           docker login -u kyawyealwin -p ${{secrets.DOCKER_PASSWORD}}
-          docker push kyayealwin/springboot_sonarqube:v1.0.0
+          docker push kyawyealwin/springboot_sonarqube:v1.0.0
