@@ -74,5 +74,5 @@ jobs:
       - name: deploy and push to DockerHub
         run: |
          docker build -t SpringBootSonarQube/ kyayealwin/springboot_sonarqube:v1.0.0 .
-         docker login -u kyawyelwin -p ${{DOCKER_PASSWORD}}
+         docker login -u kyawyelwin -p ${{secrets.DOCKER_PASSWORD}}
          docker push kyawyelwin/springboot_sonarqube:v1.0.0
